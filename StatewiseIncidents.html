@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Statewise Gun Violence Incidents</title>
+<meta charset="utf-8">
+<style>
+footer .pagination a {
+	border: 3px solid #ddd;
+	margin: 0 4px; 
+    color: black;
+    float: center;
+    padding: 8px 16px;
+    text-decoration: none;
+/*	background-color: #f1f1f1; This is to make the 1 2 3 as */
+/* white background in pagination  */
+	display: inline-block;
+    transition: background-color .1s;
+}
+
+footer .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+footer .pagination a:hover:not(.active) {
+	background-color: #ddd; 
+	color: black;
+}
+	
+footer {
+    background-color: #888;
+    padding: 18px;
+    text-align: center;
+    color: white;
+	 float: bottom;
+	height: 40px;
+	width: 98%;
+}
+
+p {color: black;
+ font-size: 19px;
+ text-align: justify;
+ padding-right: 120px;
+ padding-left: 120px;
+   }
+   
+body {
+    font-family: Arial, Helvetica, sans-serif;
+	background-color: #d2e0db;
+
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: orange;
+  }
+
+ .bar:hover {
+  fill: orangered;
+  }
+
+  
+.x.axis path {
+  display: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 191, 255, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+label {
+  position: absolute;
+  font: 20px sans-serif;
+  top: 180px;
+  right: 250px;
+}
+
+header {
+    background-color: #666;
+    text-align: center;
+	font-size: 20px;
+    padding: 15px;
+}
+.previous {
+    background-color: #f1f1f1;
+    color: white;
+}
+
+.next {
+	background-color: #f1f1f1;
+    color: white;
+}
+</style>
+<header>
+    <h1>Statewise Gun Violence Incidents in USA(2014 - 2017) </h1>
+</header>
+
+<body>
+<label><input type="checkbox"> Sort by highest number of Incidents first(2014-2017)</label>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script>
+
+var margin = {top: 60, right: 20, bottom: 140, left: 180},
+    width = 1500 - margin.left - margin.right,
+    height = 650 - margin.top - margin.bottom;
+var animateDuration = 1500;
+var animateDelay    = 10;
+	
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+	.ticks(8)
+	.tickFormat(function(d) { return parseInt(d / 1000) + "k"; });
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong style='font-size: 15px'>Total Gun Violence Incidents(2014-2017):</strong> <span style='color: black'>" + parseInt(d.incidents) +"</span>";
+  })
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
+
+d3.csv("data2.csv", type, function(error, data) {
+  x.domain(data.map(function(d) { return d.state; }));
+  y.domain([0, d3.max(data, function(d) { return d.incidents; })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+	  .selectAll("text")
+    .attr("y", 0)
+    .attr("x", -75)
+    .attr("dy", ".1em")
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "middle")
+	.attr("font-family", "sans-serif")
+	  .attr("font-size", "15px")
+      .attr("fill", "black");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -85)
+	  .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+	  .attr("font-family", "sans-serif")
+	  .attr("font-size", "20px")
+      .attr("fill", "black")
+      .text("Number of Gun Violence Incidents(2014-2017)");
+
+  var mybar = svg.selectAll(".bar")
+      .data(data)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.state); })
+      .attr("width", x.rangeBand())
+	  .attr("y", height)
+	  .attr("height", 0)
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+
+	mybar.transition()
+	.attr("height", function(d) { return height - y(d.incidents); })
+	.attr("y", function(d) { return y(d.incidents); })	
+	.duration(animateDuration)
+	.delay(function(d, i){
+			return i *	animateDelay
+	})
+	.ease('elastic')
+	
+	d3.select("input").on("change", change);
+
+  var sortTimeout = setTimeout(function() {
+    d3.select("input").property("checked", true).each(change);
+  }, 2000);
+
+  function change() {
+    clearTimeout(sortTimeout);
+
+    // Copy-on-write since tweens are evaluated after a delay.
+    var x0 = x.domain(data.sort(this.checked
+        ? function(a, b) { return b.incidents - a.incidents; }
+        : function(a, b) { return d3.ascending(a.state, b.state); })
+        .map(function(d) { return d.state; }))
+        .copy();
+
+    svg.selectAll(".bar")
+        .sort(function(a, b) { return x0(a.state) - x0(b.state); });
+
+    var transition = svg.transition().duration(1500),
+        delay = function(d, i) { return i * 10; };
+
+    transition.selectAll(".bar")
+        .delay(delay)	
+        .attr("x", function(d) { return x0(d.state); });
+
+    transition.select(".x.axis")
+			  .call(xAxis)
+		      .selectAll("text")
+              .attr("y", 0)
+              .attr("x", -75)
+              .attr("dy", ".1em")
+			  .attr("transform", "rotate(-90)")
+			  .style("text-anchor", "middle")
+			  .attr("font-family", "sans-serif")
+			  .attr("font-size", "15px")
+			  .attr("fill", "black")
+              .selectAll("g")
+              .delay(delay);
+}
+});
+
+function type(d) {
+  d.incidents = +d.incidents;
+  return d;
+}
+</script>
+
+<p><b> Number of Gun Violence Incidents vs States </b><p>
+
+<p>
+Use the sort parameter checkbox to sort the Gun Violence Incidents from highest to lowest
+</br>
+<br>
+
+The bar bar chart on this page shows the statewise total number of Gun violence incidents occured across US from the calender year 2014 to 2017. If you hove over the each bar, the tooltip will reveal the number of Gun violence reported in each state. The sort parameter checkbox will allow user to sort and unsort the bar grapgh to make the user interact with the graph data. The sorted bar graph shows which state has more number of Gun violences over the period of 4 years and we could see Illinois has the highest number with overall of 16695 incidents reported over the years from 2014 - 2017 and Hawai has the lowest number of Gun violence incidents reported at the same period of time. 
+</p>
+
+<p><b>Interesting observations:</b></p>
+<p>
+It looks like population plays somewhat significant role in number of Gun violence occurences because if you see Hawaii, it has less number of gun violence reported compared to Illinois which tops the spot.
+  </p> 
+<br>
+<a href="RateofIncidents.html">Rate of Gun Violence Incidents </a><br></br>
+<a href="YearwiseIncidents.html">Yearwise Gun Violence Incidents</a><br/><br/>
+<a href="newmainpagetry1 -2.html">Back to Home Page</a><br/><br/>
+
+<!pagination example code from https://www.w3schools.com/howto/howto_css_pagination.asp>
+<footer>
+<div class="pagination">
+  <a href="YearwiseIncidents.html" class="previous">&laquo; Previous</a>
+  <a href="HomePage.html">1</a>
+  <a href="YearwiseIncidents.html">2</a>
+  <a class="active" href="#">3</a>
+  <a href="RateofIncidents.html">4</a>
+  <a href="RateofIncidents.html" class="next">Next &raquo;</a>
+</div>
+</footer>
+</body>
+</head>
+</html>
