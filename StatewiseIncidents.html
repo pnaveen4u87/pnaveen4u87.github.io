@@ -223,7 +223,7 @@ d3.csv("data2.csv", type, function(error, data) {
 	d3.select("input").on("change", change);
 
   var sortTimeout = setTimeout(function() {
-    d3.select("input").property("checked", true).each(change);
+    d3.select("input").property("checked", false).each(change);
   }, 2000);
 
   function change() {
@@ -282,10 +282,6 @@ The bar bar chart on this page shows the statewise total number of Gun violence 
 <p>
 It looks like population plays somewhat significant role in number of Gun violence occurences because if you see Hawaii, it has less number of gun violence reported compared to Illinois which tops the spot.
   </p> 
-<br>
-<a href="RateofIncidents.html">Rate of Gun Violence Incidents </a><br></br>
-<a href="YearwiseIncidents.html">Yearwise Gun Violence Incidents</a><br/><br/>
-<a href="HomePage.html">Back to Home Page</a><br/><br/>
 
 <!pagination example code from https://www.w3schools.com/howto/howto_css_pagination.asp>
 <footer>

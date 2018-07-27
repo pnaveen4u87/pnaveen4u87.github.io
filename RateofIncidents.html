@@ -220,7 +220,7 @@ d3.csv("ratedata.csv", type, function(error, data) {
 	d3.select("input").on("change", change);
 
   var sortTimeout = setTimeout(function() {
-    d3.select("input").property("checked", true).each(change);
+    d3.select("input").property("checked", false).each(change);
   }, 2000);
 
   function change() {
@@ -278,10 +278,6 @@ This visualization shows gun violence incidents occurred per 1000 members(popula
 Though Illinois has highest number of gun violence incidents but the rate of Gun violence incident per 1000 members for Illinois is 0.325 and the rate of gun violence incident per 1000 in DC is 1.109. As discussed in the previous Statewise incidents visualization, it seems population plays a significant role. From this Rate of Incident visualization it shows that across USA, <b>District of Columbia is dangerous</b> state and <b>Hawaii is safest</b> state as it has very low rate of Gun violence incident per 1000 members which is 0.047.
 
 </p>
-<br>
-<a href="YearwiseIncidents.html">Yearwise Gun Violence Incidents</a><br/><br/>
-<a href="StatewiseIncidents.html">Statewise Gun Violence Incidents </a><br></br>
-<a href="HomePage.html">Back to Home Page</a><br/><br/>
 
 <!pagination example code from https://www.w3schools.com/howto/howto_css_pagination.asp>
 

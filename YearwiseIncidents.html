@@ -52,7 +52,7 @@ body {
 
 .line {
   fill: none;
-  stroke: #6F257F;
+  stroke: orangered;
   stroke-width: 5px;
 }
 
@@ -63,12 +63,12 @@ body {
 
 .focus circle {
   fill: #F1F3F3;
-  stroke: #6F257F;
+  stroke: orangered;
   stroke-width: 5px;
 }
   
 .hover-line {
-  stroke: #6F257F;
+  stroke: orangered;
   stroke-width: 2px;
   stroke-dasharray: 3,3;
 }
@@ -110,7 +110,7 @@ footer {
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var svg = d3.select("svg"),
-    margin = {top: 10, right: 90, bottom: 100, left: 180},
+    margin = {top: 50, right: 140, bottom: 100, left: 180},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -127,7 +127,7 @@ var line = d3.line()
 var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("data.json", function(error, data) {
+d3.csv("datayear.csv", function(error, data) {
     if (error) throw error;
 
     data.forEach(function(d) {
@@ -167,6 +167,30 @@ d3.json("data.json", function(error, data) {
 	    .attr("font-size", "20px")
         .attr("fill", "black")
         .text("Number of Gun Violence Incidents");
+		
+		g.selectAll(".text")  		
+	  .data(data)
+	  .enter()
+	  .append("text")
+	  .attr("class","label")
+	  .attr("x", (function(d) { return x(d.year); }  ))
+	  .attr("y", function(d) { return y(d.value) ; })
+	  .attr("dy", "-1em")
+	  .attr("dx", "-33em")
+	  .attr("fill", "darkblue")
+	  .style("font-size", "15px")
+	  .text(function(d) { return d.text; });
+
+	   svg.selectAll("dot")	
+        .data(data)			
+        .enter().append("circle")	
+  
+        .attr("cx", function(d,i) { return 180+x(d.year); })		 
+        .attr("cy", function(d) { return  50+y(d.value); })	
+		.attr("stroke", "orangered")
+		.attr("fill", "white")
+		.attr("stroke-width","3.0px")
+		.attr("r", 7.5)		
 
     g.append("path")
         .datum(data)
@@ -220,7 +244,7 @@ d3.json("data.json", function(error, data) {
 <p><b>Why Line Chart </b><br></p>
 
 <p>
-I have used time series for the visualization, so I felt it is appropriate to use <b>Line chart</b> to indicate the continuos values as it can give the nice visualization and readability
+I have used time series for the visualization, so I felt it is appropriate to use <b>Line chart</b> to indicate the continuos values as it can give the nice visualization and readability.
 </p>
 
 
@@ -229,18 +253,14 @@ I have used time series for the visualization, so I felt it is appropriate to us
 <p>
 First, let's see the trend of Gun Violence over the years. 
 <br></br>
-This Line chart shows a pattern of Gun Violence reported over the period of 4 years from 2014 - 2017. If you hove over the graph, the tooltip will show you the number of incidents reported for the particular year. From that you could see the year 2014 has the comparitively less number of Gun Violence across USA but over the years the number of Gun Violence incidents keep on increasing at a steady rate. As you could see, there is steep increase in the Gun Violence incident across USA from 2014 - 2017. This sounds alarming to the safety of the fellow citizens and will take a look at the distribution of Gun Violence incidents  across all the states of USA in the next visualization.
+This Line chart shows a pattern of Gun Violence reported over the period of 4 years from 2014 - 2017. If you hove over the graph, the tooltip will show you the number of incidents reported for the particular year. From that you could see the year 2014 has the comparitively less number of Gun Violence across USA but over the years the number of Gun Violence incidents keep on increasing at a steady rate. <br> </br>From the Annotations provided, you could see, there is steep increase in the Gun Violence incident in 2016 compared to 2015 across USA. Also, due to this steady rate in increase of Gun VIolence Incidents, sounds alarming to the safety of the fellow citizens and will take a look at the distribution of Gun Violence incidents across all states of USA in the next  visualization scene.
 </p>
 
 <p><b>Interesting observations:</b></p>
 
 <p>
-- The number of Gun Violence increases over the years and government should take some measures to control these kind of incidents as it concerned with the national security.
+The number of Gun Violence is increasing over the years instead of decreasing, the government should take some measures to control these kind of incidents as it concerned with the national security.
 </p>
-<br>
-<a href="StatewiseIncidents.html">Statewise Gun Violence Incidents </a><br></br>
-<a href="RateofIncidents.html">Rate of Gun Violence Incidents </a><br></br>
-<a href="HomePage.html">Back to Home Page</a><br/><br/>
 
 <!pagination example code from https://www.w3schools.com/howto/howto_css_pagination.asp>
 
