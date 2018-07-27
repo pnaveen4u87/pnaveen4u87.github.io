@@ -39,7 +39,7 @@ header {
     height: 70px; 
     text-align: center;
 	font-size: 15px;
-    padding: 5px;
+    padding: 2px;
 }
 
 .axis path,
@@ -129,7 +129,7 @@ footer {
 
 var margin = {top: 20, right: 20, bottom: 140, left: 180},
     width = 1250 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 550 - margin.top - margin.bottom;
 var animateDuration = 1500;
 var animateDelay    = 10;
 	
@@ -153,7 +153,7 @@ var tip = d3.tip()
   .attr('class', 'd3-tip')
   .offset([-10, 0])
   .html(function(d) {
-    return "<strong style='font-size: 15px'>Rate of Gun Violence Incidents(2014-2017):</strong> <span style='color: black'>" + d.rate +"</span>";
+    return "<strong style='font-size: 13px'>Rate of Gun Violence Incidents(2014-2017):</strong> <span style='color: black'>" + d.rate +"</span>";
   })
 
 var svg = d3.select("body").append("svg")
