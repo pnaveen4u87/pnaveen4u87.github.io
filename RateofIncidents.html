@@ -48,6 +48,18 @@ header {
   stroke: #000;
   shape-rendering: crispEdges;
 }
+path {
+    stroke: black;
+    fill: none;
+}
+
+line {
+    stroke: black;
+}
+
+path.marker {
+    fill: black;
+}
 
 .bar {
   fill: orange;
@@ -116,6 +128,16 @@ footer {
 	background-color: #f1f1f1;
     color: white;
 }
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 42%;
+    vertical-align: top;
+    overflow: hidden;
+}
+
 </style>
 <header>
     <h1>Rate of Gun Violence per 1000 Population in USA(2014 - 2017)</h1>
@@ -163,6 +185,9 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.call(tip);
+
+var g = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("ratedata.csv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.state; }));
@@ -216,6 +241,18 @@ d3.csv("ratedata.csv", type, function(error, data) {
 	})
 	.ease('elastic')
 	
+	g.selectAll(".text")  		
+	  .data(data)
+	  .enter()
+	  .append("text")
+	  .attr("class","annotation")
+	  .attr("x", (function(d) { return x(d.state)-175; }  ))
+	  .attr("y", function(d) { return y(d.rate)-32; })
+	  .attr("dy", ".75em")
+	  .attr("fill", "blue")
+	  .style("font-size", "13px")
+	  .text(function(d) { return d.text; });
+	
 	d3.select("input").on("change", change);
 
   var sortTimeout = setTimeout(function() {
@@ -255,6 +292,23 @@ d3.csv("ratedata.csv", type, function(error, data) {
 			  .attr("fill", "black")
               .selectAll("g")
               .delay(delay);
+			  
+			  g.selectAll(".annotation")
+	      .data(data)
+          .transition()
+          .delay(600)
+          .text(function(d) {
+            return d.text;
+          })
+          .attr("x", function(d) {
+            return x(d.state)-175;
+          })
+          .attr("y", function(d) {
+            return y(d.rate)-32;
+          })
+          .attr("dy", ".75em")
+		  .attr("fill", "blue")
+		  .style("font-size", "13px");
 }
 	
 	

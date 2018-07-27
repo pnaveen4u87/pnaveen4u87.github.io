@@ -1,4 +1,4 @@
-state,rate
+state,rate,text
 Alabama,0.2637
 Alaska,0.4357
 Arizona,0.0794
@@ -7,7 +7,7 @@ California,0.0969
 Colorado,0.1353
 Connecticut,0.202
 Delaware,0.4154
-District of Columbia,1.1118
+District of Columbia,1.1118,From rate of Gun Violence - District of Columbia looks dangerous
 Florida,0.1735
 Georgia,0.2072
 Hawaii,0.0474

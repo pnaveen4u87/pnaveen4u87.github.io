@@ -11,8 +11,6 @@ footer .pagination a {
     float: center;
     padding: 8px 16px;
     text-decoration: none;
-/*	background-color: #f1f1f1; This is to make the 1 2 3 as */
-/* white background in pagination  */
 	display: inline-block;
     transition: background-color .1s;
 }
@@ -35,6 +33,19 @@ footer {
 	 float: bottom;
 	height: 40px;
 	width: 98%;
+}
+
+path {
+    stroke: black;
+    fill: none;
+}
+
+line {
+    stroke: black;
+}
+
+path.marker {
+    fill: black;
 }
 
 p {color: black;
@@ -121,6 +132,16 @@ header {
 	background-color: #f1f1f1;
     color: white;
 }
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 42%;
+    vertical-align: top;
+    overflow: hidden;
+}
+
 </style>
 <header>
     <h1>Statewise Gun Violence Incidents in USA(2014 - 2017) </h1>
@@ -128,6 +149,9 @@ header {
 
 <body>
 <label><input type="checkbox"> Sort by highest number of Incidents first(2014-2017)</label>
+
+
+
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
@@ -168,6 +192,9 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.call(tip);
+
+var g = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("data2.csv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.state; }));
@@ -210,7 +237,7 @@ d3.csv("data2.csv", type, function(error, data) {
 	  .attr("y", height)
 	  .attr("height", 0)
       .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
+      .on('mouseout', tip.hide);
 
 	mybar.transition()
 	.attr("height", function(d) { return height - y(d.incidents); })
@@ -219,7 +246,21 @@ d3.csv("data2.csv", type, function(error, data) {
 	.delay(function(d, i){
 			return i *	animateDelay
 	})
-	.ease('elastic')
+	.ease('elastic');
+	
+	
+	 g.selectAll(".text")  		
+	  .data(data)
+	  .enter()
+	  .append("text")
+	  .attr("class","annotation")
+	  .attr("x", (function(d) { return x(d.state)-175; }  ))
+	  .attr("y", function(d) { return y(d.incidents)-32; })
+	  .attr("dy", ".75em")
+	  .attr("fill", "blue")
+	  .style("font-size", "13px")
+	  .text(function(d) { return d.text; });
+		
 	
 	d3.select("input").on("change", change);
 
@@ -260,7 +301,26 @@ d3.csv("data2.csv", type, function(error, data) {
 			  .attr("fill", "black")
               .selectAll("g")
               .delay(delay);
-}
+			  
+     g.selectAll(".annotation")
+	      .data(data)
+          .transition()
+          .delay(600)
+          .text(function(d) {
+            return d.text;
+          })
+          .attr("x", function(d) {
+            return x(d.state)-175;
+          })
+          .attr("y", function(d) {
+            return y(d.incidents)-32;
+          })
+          .attr("dy", ".75em")
+		  .attr("fill", "blue")
+		  .style("font-size", "13px");
+
+
+  }
 });
 
 function type(d) {

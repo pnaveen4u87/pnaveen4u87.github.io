@@ -1,4 +1,4 @@
-state,incidents
+state,incidents,text
 Alabama,5122
 Alaska,1288
 Arizona,2177
@@ -12,7 +12,7 @@ Florida,14197
 Georgia,8501
 Hawaii,270
 Idaho,610
-Illinois,16695
+Illinois,16695,Illinois has highest number of Gun Violence
 Indiana,5517
 Iowa,2401
 Kansas,1992
