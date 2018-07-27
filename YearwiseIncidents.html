@@ -107,7 +107,7 @@ footer {
 </header>
 
 <body>
-<svg width="960" height="500"></svg>
+<svg width="1100" height="600"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 var svg = d3.select("svg"),
@@ -151,7 +151,7 @@ d3.csv("datayear.csv", function(error, data) {
 	  .attr("y", 40)
       .style("text-anchor", "middle")
 	  .attr("font-family", "sans-serif")
-	  .attr("font-size", "20px")
+	  .attr("font-size", "15px")
       .text("Year");
 
     g.append("g")
@@ -165,7 +165,7 @@ d3.csv("datayear.csv", function(error, data) {
         .attr("dy", "1em")
         .style("text-anchor", "middle")
 		.attr("font-family", "sans-serif")
-	    .attr("font-size", "20px")
+	    .attr("font-size", "15px")
         .attr("fill", "black")
         .text("Number of Gun Violence Incidents");
 		
