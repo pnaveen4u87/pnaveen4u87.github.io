@@ -163,19 +163,18 @@ footer {
       <img src="newgun.jpg" alt="gun" style="height:100%; width:100%;" "img">
 <div class="top-left">
 <p><b>About the Visualization:</b> For this Gun Violence analysis project, I have used 2014 to 2017 calendar year U.S Gun Violence data set from Kaggle(<b><a href="https://www.kaggle.com/jameslko/gun-violence-data/data">Gun Violence data</a></b>) and 2014 to 2017 calendar year U.S population data set from Census(<b><a href=https://www2.census.gov/programs-surveys/popest/tables/2010-2017/state/totals/nst-est2017-01.xlsx>Population data</a></b>). I have chosen the factors like Number of incidents, year and used US population data to show the rate of Gun Violence per 1000 population for the years 2014 - 2017. 
-<br></br>This project is based on hybrid interactive slide show. Guidance is provided on each slide, but the users are free to drill down and list some details that they might be interested on or they can choose just to continue.
+<br></br>This project is based on hybrid interactive slide show. Guidance is provided on each slide to the users that they can see  details like annotations, tooltips, sort etc., that they might be interested on or they can choose just to continue.
 </b></br>
 <br><b>Scenes</b></br>
 Each scene is a single chart with a specific goal related to the same subject and in a specific order to best convey the message. Each slide has similar template, fonts, hue and tool tip to provide visual consistency on scene.<br>
 <br><b>Annotations</b></br>
-Annotations are provided in appropriate places in each chart, which is highlighted in different color and a tooltip, when mouse is hovered over the data points of each chart. The legend and labels along the X and Y axis provides additional annotations for the chart.<br>
+Annotations are provided in all line and bar charts, which is highlighted in blue color to show which state has highest Gun Violence incidents reported, number of Gun Violence reported in 2016 and which state has highest rate of Gun Violence and also used tooltips, when mouse is hovered over the data points of each chart. The legend and labels along the X and Y axis provides additional annotations for the chart.<br>
 
 <br><b>Triggers</b></br>
-The menu items along with the prev and next button in the navigation bar of each page enable the User Interface events. The mouse click acts as a trigger event for navigation. User interacts by clicking on the button or menu items to navigate to various part of this story. The mouse hover is another user interface event. The hover event triggers the display of tooltip in all the line and bar charts. <br>
+The previous and next buttons, page numbers in the navigation bar of each page acts a triggers and sort checkbox on all bar charts also acts as one of the triggers. The mouse click acts as a trigger event for navigation.  The mouse hover is another user interface event. The hover event triggers the display of tooltip in all the line and bar charts. <br>
 
 <br><b>Parameters</b></br>
-The name of the target slide is passed as an input paramter to the button and navigation bar items. Based on the user selection, appropriate data is filtered and respective slide with appropriate chart for the scene is displayed. The active slide is highlighted in green will let user know which page they are in.<br></br>
-In bar graphs, check box entry acts as the parameter for the graph, user can sort and unsort the data.
+In bar graphs, check box entry acts as the parameter for the graph, user can sort and unsort the data. Slide numbers, current page highlighted in green also serve as parameters. Based on the user sort parameter selection, appropriate data is filtered and respective data is displayed. The active slide is highlighted in green will let user know which page they are in.<br>
 
 <br>
 Using the links under <b>Discussed Visualization</b> user can traverse to respective graphs to find overall incidents reported across USA between 2014 and 2017, then, which state has highest or lowest Gun Violence Incidents and which state has highest rate of Gun Violence per 1000 population which gives you an overview of which states are safe and which states are dangerous.
